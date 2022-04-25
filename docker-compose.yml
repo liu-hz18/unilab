@@ -20,7 +20,7 @@ services:
     volumes: 
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./mount/nginx/logs:/var/log/nginx
+      - /home/cslab/unilab-mount/nginx/logs:/var/log/nginx
 
   unilab-mysql:
     container_name: unilab-mysql
@@ -37,7 +37,7 @@ services:
         aliases:
           - mysql
     volumes: 
-      - ./mount/mysql:/var/lib/mysql
+      - /home/cslab/unilab-mount/mysql:/var/lib/mysql
       - ./initdb:/docker-entrypoint-initdb.d/
     healthcheck:
       test: '/usr/bin/mysql --user=root --password=123456 --execute "SHOW DATABASES;"'
@@ -56,8 +56,8 @@ services:
     networks:
       - backend
     volumes: 
-      - ./mount/server1-runtime:/unilab-files/runtime
-      - ./mount/upload:/unilab-files/upload:rw
+      - /home/cslab/unilab-mount/server1-runtime:/unilab-files/runtime
+      - /home/cslab/unilab-mount/upload:/unilab-files/upload:rw
     cap_add:
      - SYS_PTRACE
 
@@ -71,8 +71,8 @@ services:
     networks:
       - backend
     volumes: 
-      - ./mount/server2-runtime:/unilab-files/runtime
-      - ./mount/upload:/unilab-files/upload:rw
+      - /home/cslab/unilab-mount/server2-runtime:/unilab-files/runtime
+      - /home/cslab/unilab-mount/upload:/unilab-files/upload:rw
     cap_add:
      - SYS_PTRACE
       
@@ -86,8 +86,8 @@ services:
     networks:
       - backend
     volumes: 
-      - ./mount/server3-runtime:/unilab-files/runtime
-      - ./mount/upload:/unilab-files/upload:rw
+      - /home/cslab/unilab-mount/server3-runtime:/unilab-files/runtime
+      - /home/cslab/unilab-mount/upload:/unilab-files/upload:rw
     cap_add:
      - SYS_PTRACE
 

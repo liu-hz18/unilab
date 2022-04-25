@@ -4,11 +4,6 @@
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-cache:
-    key: unilab-mount
-    paths:
-      - mount/
-
 stages:
   # - install
   # - frontend-lint
@@ -28,10 +23,6 @@ job_build:
   stage: build
   script:
     - make build
-  cache:
-    key: unilab-mount
-    paths:
-      - mount/
 
 job_deploy:
   tags:
@@ -39,9 +30,5 @@ job_deploy:
   stage: deploy
   script:
     - make deploy
-  cache:
-    key: unilab-mount
-    paths:
-      - mount/
   only:
     - master
