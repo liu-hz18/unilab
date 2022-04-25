@@ -1,3 +1,5 @@
+# how to pull submodules or other git repos in gitlab-runner ?
+# see: https://docs.gitlab.com/ee/ci/ssh_keys/#ssh-keys-when-using-the-shell-executor
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
