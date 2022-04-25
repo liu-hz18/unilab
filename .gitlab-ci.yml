@@ -26,7 +26,7 @@ job_build:
   cache:
     key: unilab-mount
     paths:
-      - /mount/
+      - mount/
 
 job_deploy:
   tags:
@@ -37,6 +37,6 @@ job_deploy:
   cache:
     key: unilab-mount
     paths:
-      - /mount/
+      - mount/
   only:
     - master
