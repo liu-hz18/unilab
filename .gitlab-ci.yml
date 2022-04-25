@@ -7,10 +7,8 @@ stages:
 
 
 before_script:
-  - eval `ssh-agent -s`
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
+  # - eval `ssh-agent -s`
+  # - ssh-add <(echo "$SSH_PRIVATE_KEY")
   - git submodule sync --recursive
   - git submodule update --init --recursive
 
