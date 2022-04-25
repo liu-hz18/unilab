@@ -1,12 +1,18 @@
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
-
 stages:
   # - install
   # - frontend-lint
   # - backend-lint
   - build
   - deploy
+
+
+before_script:
+  - eval `ssh-agent -s`
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - git submodule sync --recursive
+  - git submodule update --init --recursive
 
 # job_frontend_lint:
 #   stage: frontend-lint
