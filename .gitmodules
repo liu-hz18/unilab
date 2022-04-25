@@ -1,0 +1,6 @@
+[submodule "unilab-frontend"]
+	path = unilab-frontend
+	url = git@git.tsinghua.edu.cn:graduation-project/unilab-frontend.git
+[submodule "unilab-backend"]
+	path = unilab-backend
+	url = git@git.tsinghua.edu.cn:graduation-project/unilab-backend.git
