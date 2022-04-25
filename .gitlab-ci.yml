@@ -23,7 +23,6 @@ job_refresh:
   stage: refresh
   script:
     - make stop
-    - sudo rm -r /mount
 
 job_build:
   tags:
