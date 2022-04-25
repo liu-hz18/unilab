@@ -17,17 +17,16 @@ stages:
 #     - cd /unilab-frontend
 #     - 
 
-cache:
-  key: unilab-mount
-  paths:
-    - /mount/
-
 job_build:
   tags:
     - unilab-deploy
   stage: build
   script:
     - make build
+  cache:
+    key: unilab-mount
+    paths:
+      - /mount/
 
 job_deploy:
   tags:
@@ -35,5 +34,9 @@ job_deploy:
   stage: deploy
   script:
     - make deploy
+  cache:
+    key: unilab-mount
+    paths:
+      - /mount/
   only:
     - master
