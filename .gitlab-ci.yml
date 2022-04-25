@@ -5,7 +5,7 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 stages:
-  # - install
+  - refresh
   # - frontend-lint
   # - backend-lint
   - build
@@ -16,6 +16,14 @@ stages:
 #   script:
 #     - cd /unilab-frontend
 #     - 
+
+job_refresh:
+  tags:
+    - unilab-deploy
+  stage: refresh
+  script:
+    - make stop
+    - sudo rm -r /mount
 
 job_build:
   tags:
