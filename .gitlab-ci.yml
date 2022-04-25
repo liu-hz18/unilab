@@ -15,11 +15,15 @@ stages:
 #     - 
 
 job_build:
+  tags:
+    - unilab-deploy
   stage: build
   script:
     - make build
 
 job_deploy:
+  tags:
+    - unilab-deploy
   stage: deploy
   script:
     - make deploy
