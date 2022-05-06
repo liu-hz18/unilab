@@ -88,7 +88,8 @@ CREATE TABLE IF NOT EXISTS `oj_test_run`(
 
     `language` VARCHAR(255) NOT NULL,
     `save_dir` VARCHAR(255) NOT NULL,
-    `compile_result` VARCHAR(1024) NOT NULL DEFAULT '',
+    `compile_result` TEXT,
+    `extra_result` TEXT,
     CONSTRAINT c_oj_test_run_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_test_run_2 FOREIGN KEY (question_id) REFERENCES oj_question(question_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_test_run_3 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -100,6 +101,7 @@ CREATE TABLE IF NOT EXISTS `oj_testcase_run`(
     `testcase_run_state` VARCHAR(255) NOT NULL DEFAULT 'Pending',
     `testcase_run_time_elapsed` INT UNSIGNED NOT NULL DEFAULT 0,
     `testcase_run_memory_usage` INT UNSIGNED NOT NULL DEFAULT 0,
+    `testcase_checker_output` TEXT,
     `test_id` INT UNSIGNED NOT NULL,
     CONSTRAINT c_oj_testcase_run_1 FOREIGN KEY (test_id) REFERENCES oj_test_run(test_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='测例信息, 每行对应一次评测的某个测例';
@@ -122,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `os_grade_points`(
     `score` INT UNSIGNED NOT NULL,
     `total_score` INT UNSIGNED NOT NULL,
     CONSTRAINT os_grade_points_1 FOREIGN KEY (grade_id) REFERENCES os_grade(os_grade_id) ON DELETE CASCADE ON UPDATE CASCADE
-)ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='操作系统章节测试点';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='操作系统章节测试点';
 
 CREATE TABLE IF NOT EXISTS `os_grade_outputs`(
     `output_id` INT UNSIGNED NOT NULL,
@@ -133,11 +135,11 @@ CREATE TABLE IF NOT EXISTS `os_grade_outputs`(
     `content` TEXT NOT NULL,
     -- `expand` TINYINT(1) NOT NULL,
     CONSTRAINT os_grade_outputs_1 FOREIGN KEY (grade_id) REFERENCES os_grade(os_grade_id) ON DELETE CASCADE ON UPDATE CASCADE
-)ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='操作系统章节测试输出';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='操作系统章节测试输出';
 
 CREATE TABLE IF NOT EXISTS `os_grade_result`(
     `result_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `grade_id` INT UNSIGNED NOT NULL,
     `pass_time` INT UNSIGNED NOT NULL,
     `total_time` INT UNSIGNED NOT NULL
-)ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='操作系统章节成绩总表';
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8 COMMENT='操作系统章节成绩总表';
