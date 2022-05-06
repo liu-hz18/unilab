@@ -41,16 +41,44 @@ services:
       - ./initdb:/docker-entrypoint-initdb.d/
     healthcheck:
       test: '/usr/bin/mysql --user=root --password=123456 --execute "SHOW DATABASES;"'
-      interval: 30s
-      timeout: 30s
-      retries: 5
-      start_period: 15s
+      interval: 15s
+      timeout: 15s
+      retries: 10
+      start_period: 10s
 
+  unilab-redis:
+    container_name: unilab-redis
+    image: redis:latest
+    restart: always
+    environment:
+      ALLOW_EMPTY_PASSWORD: 'yes'
+      TZ: 'Asia/Shanghai'
+    ports:
+      - 6380:6379
+    networks:
+      backend:
+        aliases:
+          - redis
+    volumes:
+      - /home/cslab/unilab-mount/redis/data:/var/lib/redis:rw
+      - /home/cslab/unilab-mount/redis/log:/var/log/redis:rw
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:rw
+    command:
+      /bin/bash -c "redis-server /usr/local/etc/redis/redis.conf --requirepass 123456"
+    healthcheck:
+      test: "redis-cli ping -h 127.0.0.1 -p 6379 -a 123456"
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 5s
+  
   unilab-backend1:
     container_name: unilab-backend1
     build: ./unilab-backend
     depends_on:
       unilab-mysql:
+        condition: service_healthy
+      unilab-redis:
         condition: service_healthy
     restart: always
     networks:
@@ -67,6 +95,8 @@ services:
     depends_on:
       unilab-mysql:
         condition: service_healthy
+      unilab-redis:
+        condition: service_healthy
     restart: always
     networks:
       - backend
@@ -81,6 +111,8 @@ services:
     build: ./unilab-backend
     depends_on:
       unilab-mysql:
+        condition: service_healthy
+      unilab-redis:
         condition: service_healthy
     restart: always
     networks:
