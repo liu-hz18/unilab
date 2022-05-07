@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `oj_test_run`(
 
     `language` VARCHAR(255) NOT NULL,
     `save_dir` VARCHAR(255) NOT NULL,
+    `score` INT UNSIGNED NOT NULL DEFAULT 0,
     `compile_result` TEXT,
     `extra_result` TEXT,
     CONSTRAINT c_oj_test_run_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
