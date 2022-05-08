@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `os_grade`(
     `os_grade_id`   INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `user_id` INT(10) UNSIGNED NOT NULL,
     `branch_name`   VARCHAR(255) NOT NULL,
+    `test_status`   VARCHAR(255) NOT NULL,
     `grade_time` DATETIME NOT NULL
     -- `grade` INT UNSIGNED NOT NULL,
     -- `total_grade` INT UNSIGNED NOT NULL,
