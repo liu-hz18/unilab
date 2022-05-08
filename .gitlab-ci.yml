@@ -23,6 +23,7 @@ job_stop:
   stage: stop
   script:
     - make stop
+  allow_failure: true
 
 job_build:
   tags:
