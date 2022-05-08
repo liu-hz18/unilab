@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `os_grade_outputs`(
     `type` VARCHAR(255) NOT NULL,
     -- `alert_class` VARCHAR(255) NOT NULL,
     `message` VARCHAR(255) NOT NULL,
-    `content` TEXT NOT NULL,
+    `content` MEDIUMTEXT NOT NULL,
     -- `expand` TINYINT(1) NOT NULL,
     CONSTRAINT os_grade_outputs_1 FOREIGN KEY (grade_id) REFERENCES os_grade(os_grade_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='操作系统章节测试输出';
