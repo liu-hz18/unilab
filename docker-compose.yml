@@ -38,7 +38,11 @@ services:
           - mysql
     volumes: 
       - /home/cslab/unilab-mount/mysql:/var/lib/mysql
-      - ./initdb:/docker-entrypoint-initdb.d/
+      - /home/cslab/unilab-mount/mysql-backup:/tmp/mysql-backup
+      - ./mysql/init/:/docker-entrypoint-initdb.d/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    command:
+      --authentication-policy=mysql_native_password
     healthcheck:
       test: '/usr/bin/mysql --user=root --password=123456 --execute "SHOW DATABASES;"'
       interval: 15s

@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `oj_user_course`(
     `course_id` INT UNSIGNED NOT NULL,
     `user_id` INT(10) UNSIGNED NOT NULL,
     `user_type` VARCHAR(255) NOT NULL,
+    `access_count` INT UNSIGNED NOT NULL DEFAULT 0,
     CONSTRAINT c_oj_user_course_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_user_course_2 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户-课程关联表';
@@ -78,6 +79,23 @@ CREATE TABLE IF NOT EXISTS `oj_announcement`(
     CONSTRAINT c_oj_announcement_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='公告信息';
 
+CREATE TABLE IF NOT EXISTS `oj_user_announcement` (
+    `user_id` INT(10) UNSIGNED NOT NULL,
+    `announcement_id` INT UNSIGNED NOT NULL,
+    `access_count` INT UNSIGNED NOT NULL DEFAULT 0,
+    CONSTRAINT c_oj_user_announcement_1 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT c_oj_user_announcement_2 FOREIGN KEY (announcement_id) REFERENCES oj_announcement(announcement_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户访问公告信息表';
+
+CREATE TABLE IF NOT EXISTS `oj_user_question` (
+    `user_id` INT(10) UNSIGNED NOT NULL,
+    `question_id` INT UNSIGNED NOT NULL,
+    `access_count` INT UNSIGNED NOT NULL DEFAULT 0,
+    `download_count` INT UNSIGNED NOT NULL DEFAULT 0,
+    CONSTRAINT c_oj_user_question_1 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT c_oj_user_question_2 FOREIGN KEY (question_id) REFERENCES oj_question(question_id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户访问题目信息表';
+
 CREATE TABLE IF NOT EXISTS `oj_test_run`(
     `test_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `test_launch_time` DATETIME NOT NULL,
@@ -89,7 +107,19 @@ CREATE TABLE IF NOT EXISTS `oj_test_run`(
     `language` VARCHAR(255) NOT NULL,
     `save_dir` VARCHAR(255) NOT NULL,
     `score` INT UNSIGNED NOT NULL DEFAULT 0,
+    `pass_num` INT UNSIGNED NOT NULL DEFAULT 0,
+    
+    `file_size` INT UNSIGNED NOT NULL DEFAULT 0,
+    `file_num`  INT UNSIGNED NOT NULL DEFAULT 0,
+    `file_lines` INT UNSIGNED NOT NULL DEFAULT 0,
+
+    `diff_file` INT UNSIGNED NOT NULL DEFAULT 0,
+    `diff_insert` INT UNSIGNED NOT NULL DEFAULT 0,
+    `diff_delete` INT UNSIGNED NOT NULL DEFAULT 0,
+    
     `compile_result` TEXT,
+    `lint_result` TEXT,
+    `sonarqube_result` TEXT,
     `extra_result` TEXT,
     CONSTRAINT c_oj_test_run_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_test_run_2 FOREIGN KEY (question_id) REFERENCES oj_question(question_id) ON DELETE CASCADE ON UPDATE CASCADE,

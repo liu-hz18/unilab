@@ -2,6 +2,7 @@
 
 /mount
 /unilab-files
+/mysql/init/rebuild.sql
 *.log
 
 !.gitkeep
