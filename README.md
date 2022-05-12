@@ -1,6 +1,6 @@
 # Unilab Deployer
 
-## powered by Vue2 & Golang
+### powered by Vue2 & Golang
 
 ## Project build
 ```
@@ -37,11 +37,11 @@ here is a feasible but not very simple and convenient method
 ```
 # 1. DO NOT STOP THE RUNNER! enter mysql container and execute:
 
-mysqldump -p unilab [table_name] > /tmp/mysql-backup/unilab-[tablename].sql
+mysqldump -p unilab [tablename] > /tmp/mysql-backup/unilab-[tablename].sql
 
-# now in your dir <../unilab-mount/mysql-backup>, there should be a file named "unilab-[tablename].sql" which contains table defination and table data, maybe you want to do some modifications in this .sql file.
+# now in your dir <../unilab-mount/mysql-backup>, there should be a file named "unilab.sql" which contains table defination and table data, maybe you want to do some modifications in this .sql file.
 
-# 2. COPY this file to ./mysql/init/rebuild.sql
+# 2. COPY this file(s) to ./mysql/init/
 
 # 3. shutdown the RUNNER
 
@@ -53,4 +53,26 @@ rm -r ./unilab-mount/mysql
 
 sudo docker-compose build
 sudo docker-compose up -d
+```
+
+## System Profiling
+Requirements
+```
+install graphviz and configure it in your $PATH, see http://graphviz.org/download/
+```
+monitor CPU and MEM
+```
+# execute these commands on YOUR COMPUTER which have a graphic desktop and local browser.
+go tool pprof -http=":8081" https://lab.cs.tsinghua.edu.cn/unilab/api/debug/pprof/profile
+go tool pprof -http=":8082" https://lab.cs.tsinghua.edu.cn/unilab/api/debug/pprof/heap
+```
+
+## Stress Testing
+Requirements: install go-wrk
+```
+git clone https://github.com/adeven/go-wrk.git
+cd go-wrk
+go build
+# run a test
+./go-wrk [flags] url
 ```
