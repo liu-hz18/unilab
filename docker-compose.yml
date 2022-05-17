@@ -29,6 +29,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: unilab
+      MYSQL_USER: unilab
+      MYSQL_PASSWORD: 123456
       TZ: 'Asia/Shanghai'
     ports: 
       - 3307:3306
@@ -37,14 +39,20 @@ services:
         aliases:
           - mysql
     volumes: 
-      - /home/cslab/unilab-mount/mysql:/var/lib/mysql
-      - /home/cslab/unilab-mount/mysql-backup:/tmp/mysql-backup
+      - /home/cslab/unilab-mount/mysql/data:/var/lib/mysql
+      - /home/cslab/unilab-mount/mysql/backup:/tmp/mysql-backup
+      - /home/cslab/unilab-mount/mysql/logs:/var/log/mysql
       - ./mysql/init/:/docker-entrypoint-initdb.d/
       - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - /etc/localtime:/etc/localtime:ro
     command:
       --authentication-policy=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      --lower_case_table_names=1
     healthcheck:
-      test: '/usr/bin/mysql --user=root --password=123456 --execute "SHOW DATABASES;"'
+      test: '/usr/bin/mysql --user=unilab --password=123456 --execute "SHOW DATABASES;"'
       interval: 15s
       timeout: 15s
       retries: 10

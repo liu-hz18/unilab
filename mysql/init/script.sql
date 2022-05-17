@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `oj_user`(
     `user_type` TINYINT UNSIGNED NOT NULL,
     `user_signup_time` DATETIME NOT NULL DEFAULT NOW(),
     `user_token` VARCHAR(255) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户信息';
 
 CREATE TABLE IF NOT EXISTS `oj_course`(
     `course_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `oj_course`(
     `course_teacher` VARCHAR(32) NOT NULL,
     `course_term` VARCHAR(64) NOT NULL,
     `course_type` TINYINT UNSIGNED NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='课程信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='课程信息';
 
 CREATE TABLE IF NOT EXISTS `oj_user_course`(
     `course_id` INT UNSIGNED NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `oj_user_course`(
     `access_count` INT UNSIGNED NOT NULL DEFAULT 0,
     CONSTRAINT c_oj_user_course_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_user_course_2 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户-课程关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户-课程关联表';
 
 CREATE TABLE IF NOT EXISTS `oj_question`(
     `question_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `oj_question`(
     `question_test_ac_num` INT UNSIGNED NOT NULL DEFAULT 0,
     issue_time DATETIME NOT NULL,
     CONSTRAINT c_oj_question FOREIGN KEY (question_creator) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='题目信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='题目信息';
 
 CREATE TABLE IF NOT EXISTS `oj_homework`(
     `homework_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -55,21 +55,21 @@ CREATE TABLE IF NOT EXISTS `oj_homework`(
     `homework_description` VARCHAR(255) default '',
     `course_id` INT UNSIGNED NOT NULL,
     CONSTRAINT c_oj_homework_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='作业信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='作业信息';
 
 CREATE TABLE IF NOT EXISTS `oj_question_homework`(
     `question_id` INT UNSIGNED NOT NULL,
     `homework_id` INT UNSIGNED NOT NULL,
     CONSTRAINT c_oj_question_homework_1 FOREIGN KEY (question_id) REFERENCES oj_question(question_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_question_homework_2 FOREIGN KEY (homework_id) REFERENCES oj_homework(homework_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='作业-题目关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='作业-题目关联表';
 
 CREATE TABLE IF NOT EXISTS `oj_question_course`(
     `question_id` INT UNSIGNED NOT NULL,
     `course_id` INT UNSIGNED NOT NULL,
     CONSTRAINT c_oj_question_course_1 FOREIGN KEY (question_id) REFERENCES oj_question(question_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_question_course_2 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='课程-题目关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='课程-题目关联表';
 
 CREATE TABLE IF NOT EXISTS `oj_announcement`(
     `announcement_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `oj_announcement`(
     `course_id` INT UNSIGNED NOT NULL,
     `issue_time` DATETIME NOT NULL,
     CONSTRAINT c_oj_announcement_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='公告信息';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='公告信息';
 
 CREATE TABLE IF NOT EXISTS `oj_user_announcement` (
     `user_id` INT(10) UNSIGNED NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `oj_user_announcement` (
     `access_count` INT UNSIGNED NOT NULL DEFAULT 0,
     CONSTRAINT c_oj_user_announcement_1 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_user_announcement_2 FOREIGN KEY (announcement_id) REFERENCES oj_announcement(announcement_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户访问公告信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户访问公告信息表';
 
 CREATE TABLE IF NOT EXISTS `oj_user_question` (
     `user_id` INT(10) UNSIGNED NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `oj_user_question` (
     `download_count` INT UNSIGNED NOT NULL DEFAULT 0,
     CONSTRAINT c_oj_user_question_1 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_user_question_2 FOREIGN KEY (question_id) REFERENCES oj_question(question_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户访问题目信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='用户访问题目信息表';
 
 CREATE TABLE IF NOT EXISTS `oj_test_run`(
     `test_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `oj_test_run`(
     CONSTRAINT c_oj_test_run_1 FOREIGN KEY (course_id) REFERENCES oj_course(course_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_test_run_2 FOREIGN KEY (question_id) REFERENCES oj_question(question_id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT c_oj_test_run_3 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='评测信息, 每行对应一次提交';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='评测信息, 每行对应一次提交';
 
 CREATE TABLE IF NOT EXISTS `oj_testcase_run`(
     `testcase_run_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `oj_testcase_run`(
     `testcase_checker_output` TEXT,
     `test_id` INT UNSIGNED NOT NULL,
     CONSTRAINT c_oj_testcase_run_1 FOREIGN KEY (test_id) REFERENCES oj_test_run(test_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='测例信息, 每行对应一次评测的某个测例';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='测例信息, 每行对应一次评测的某个测例';
 
 CREATE TABLE IF NOT EXISTS `os_grade`(
     `os_grade_id`   INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `os_grade`(
     -- `total_grade` INT UNSIGNED NOT NULL,
     -- `trace` VARCHAR(1024) NOT NULL,
     -- CONSTRAINT os_grade_1 FOREIGN KEY (user_id) REFERENCES oj_user(user_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='操作系统章节成绩';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='操作系统章节成绩';
 
 CREATE TABLE IF NOT EXISTS `os_grade_points`(
     `point_id` INT UNSIGNED NOT NULL,
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `os_grade_points`(
     `score` INT UNSIGNED NOT NULL,
     `total_score` INT UNSIGNED NOT NULL,
     CONSTRAINT os_grade_points_1 FOREIGN KEY (grade_id) REFERENCES os_grade(os_grade_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='操作系统章节测试点';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='操作系统章节测试点';
 
 CREATE TABLE IF NOT EXISTS `os_grade_outputs`(
     `output_id` INT UNSIGNED NOT NULL,
@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `os_grade_outputs`(
     `content` MEDIUMTEXT NOT NULL,
     -- `expand` TINYINT(1) NOT NULL,
     CONSTRAINT os_grade_outputs_1 FOREIGN KEY (grade_id) REFERENCES os_grade(os_grade_id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='操作系统章节测试输出';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='操作系统章节测试输出';
 
 CREATE TABLE IF NOT EXISTS `os_grade_result`(
     -- `result_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -179,4 +179,4 @@ CREATE TABLE IF NOT EXISTS `os_grade_result`(
     `pass_time` INT UNSIGNED NOT NULL, -- CI通过次数
     `total_time` INT UNSIGNED NOT NULL, -- CI总次数,
     UNIQUE(user_id,branch_name)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COMMENT='操作系统章节成绩总表';
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='操作系统章节成绩总表';
